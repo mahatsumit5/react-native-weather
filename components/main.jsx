@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { handleSearch } from "../axios";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "./Header";
@@ -12,14 +12,15 @@ const Main = () => {
     dispatch(handleSearch());
   }, []);
   const { deafaultweather } = useSelector((store) => store.weatherData);
-  console.log(deafaultweather);
   return (
-    <View style={{ gap: 10 }}>
+    <ScrollView style={{ gap: 10 }}>
       <Header />
       <Temperature data={deafaultweather} />
       <Details data={deafaultweather} />
-      <ForeCast />
-    </View>
+      <ForeCast data={deafaultweather?.forecast?.forecastday[0]} />
+      <ForeCast data={deafaultweather?.forecast?.forecastday[1]} />
+      <ForeCast data={deafaultweather?.forecast?.forecastday[2]} />
+    </ScrollView>
   );
 };
 

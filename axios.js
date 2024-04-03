@@ -1,5 +1,9 @@
 import axios from "axios";
-import { setDefaultWeather } from "./redux/weather.slice";
+import {
+  setDefaultWeather,
+  setLoading,
+  setModalVisible,
+} from "./redux/weather.slice";
 export const handleSearch = (city) => async (dispatch) => {
   const options = {
     method: "GET",
@@ -17,7 +21,9 @@ export const handleSearch = (city) => async (dispatch) => {
   try {
     const response = await axios.request(options);
     dispatch(setDefaultWeather(response.data));
-    return response.data;
+
+    dispatch(setLoading(false));
+    dispatch(setModalVisible(false));
   } catch (error) {
     console.error(error);
   }

@@ -1,60 +1,76 @@
-import { StyleSheet, Text, View } from "react-native";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { Feather } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
-import { FontAwesome6 } from "@expo/vector-icons";
-import { FontAwesome5 } from "@expo/vector-icons";
-function ForeCast() {
-  return (
-    <View>
-      <Text
-        style={{
-          color: "white",
-          marginTop: 20,
-          textAlign: "center",
-          fontSize: 18,
-        }}
-      >
-        ForeCast
-      </Text>
-      <View style={Style.container}>
-        <View style={Style.content}>
-          <FontAwesome5 name="umbrella" size={44} color="#6D74CB" />
-          <Text style={Style.title}>Details</Text>
-          <Text style={Style.subtitle}>Precipitation</Text>
+import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Image } from "expo-image";
+function ForeCast({ data }) {
+  if (data?.date) {
+    return (
+      <View>
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <Text
+            style={{
+              color: "white",
+              marginTop: 20,
+              textAlign: "center",
+              fontSize: 16,
+            }}
+          >
+            {new Date(data.date).toDateString()}
+          </Text>
+          <Text
+            style={{
+              color: "grey",
+              marginTop: 20,
+              textAlign: "center",
+              fontSize: 14,
+            }}
+          >
+            {data.day.condition.text}
+          </Text>
         </View>
-        <View style={Style.content}>
-          <Ionicons name="water" size={44} color="#559CD1" />
-          <Text style={Style.title}>Details</Text>
-          <Text style={Style.subtitle}>Humidity</Text>
-        </View>
-        <View style={Style.content}>
-          <FontAwesome6 name="wind" size={44} color="#C1C3D4" />
-          <Text style={Style.title}>Details</Text>
-          <Text style={Style.subtitle}>Wind Speed</Text>
-        </View>
+        <FlatList
+          data={data.hour || []}
+          keyExtractor={(item) => item.time}
+          renderItem={Item}
+          style={{ marginTop: 15 }}
+          horizontal
+          initialNumToRender={3}
+        />
       </View>
-    </View>
-  );
+    );
+  } else {
+    <Text>Loading....</Text>;
+  }
 }
 
 export default ForeCast;
-
+const Item = ({ item }) => {
+  return (
+    <View style={Style.content}>
+      <Text style={Style.title}>
+        {new Date(item.time).toLocaleTimeString("en-AU")}
+      </Text>
+      <View style={{ width: "100%", height: 80 }}>
+        <Image
+          style={Style.image}
+          source={`https:${item?.condition.icon}`}
+          contentFit="contain"
+          //   transition={1000}
+        />
+      </View>
+      <Text style={Style.title}>{item.feelslike_c}</Text>
+      <Text style={Style.subtitle}>{item?.condition.text}</Text>
+    </View>
+  );
+};
 const Style = StyleSheet.create({
-  container: {
-    alignItems: "center",
-    marginTop: 20,
-
-    flexDirection: "row",
-    justifyContent: "space-around",
-  },
+  container: { gap: 10, marginTop: 20 },
   content: {
     padding: 15,
     borderRadius: 15,
-
+    marginRight: 20,
     backgroundColor: "#1c022c",
     gap: 10,
     alignItems: "center",
+    width: 150,
   },
   subtitle: {
     color: "white",
@@ -65,5 +81,9 @@ const Style = StyleSheet.create({
     color: "#FFF",
     fontWeight: "500",
     fontSize: 14,
+  },
+  image: {
+    flex: 1,
+    width: "100%",
   },
 });
