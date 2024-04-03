@@ -1,39 +1,31 @@
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
-
+import { LinearGradient } from "expo-linear-gradient";
+import { Provider, useDispatch } from "react-redux";
+import store from "./redux/store";
+import Main from "./components/main";
 export default function App() {
-  async function getWeather() {
-    const url = "https://open-weather13.p.rapidapi.com/city/landon";
-    const options = {
-      method: "GET",
-      headers: {
-        "X-RapidAPI-Key": "248de94f44mshef0e6efb0ba66fbp1abdafjsn2422e43de92f",
-        "X-RapidAPI-Host": "open-weather13.p.rapidapi.com",
-      },
-    };
-
-    try {
-      const response = await fetch(url, options);
-      const result = await response.text();
-      console.log(result);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-  useEffect(() => {}, []);
-
   return (
-    <SafeAreaView style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="grey" />
-    </SafeAreaView>
+    <Provider store={store}>
+      <LinearGradient
+        // Background Linear Gradient
+        colors={["rgba(0, 5, 6, 1)", "rgba(59, 13, 150, 0.8)"]}
+        style={styles.container}
+        end={[3, 0.8]}
+      >
+        <StatusBar style="dark" />
+        <SafeAreaView style={styles.container}>
+          <Main />
+        </SafeAreaView>
+      </LinearGradient>
+    </Provider>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "green",
+    padding: 20,
   },
 });
