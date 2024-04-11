@@ -70,7 +70,9 @@ const Style = StyleSheet.create({
     backgroundColor: "#1c022c",
     gap: 10,
     alignItems: "center",
-    width: 150,
+    width: 170,
+
+    elevation: 4,
   },
   subtitle: {
     color: "white",

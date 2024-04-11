@@ -122,4 +122,5 @@ export const cities = [
   { id: 121, name: "Wuhan" },
   { id: 122, name: "Xi'an" },
   { id: 123, name: "Zürich" },
+  { id: 124, name: "Bhaktapur" },
 ];

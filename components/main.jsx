@@ -13,7 +13,7 @@ const Main = () => {
   }, []);
   const { deafaultweather } = useSelector((store) => store.weatherData);
   return (
-    <ScrollView style={{ gap: 10 }}>
+    <ScrollView style={{ gap: 10, width: "100%" }}>
       <Header />
       <Temperature data={deafaultweather} />
       <Details data={deafaultweather} />

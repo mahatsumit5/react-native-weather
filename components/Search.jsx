@@ -64,6 +64,7 @@ const Search = () => {
           keyboardType="default"
           onChangeText={handleTextChange}
           value={city}
+          placeholderTextColor={"white"}
         />
         <Pressable
           style={Styles.button}
